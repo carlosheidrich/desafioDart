@@ -37,7 +37,9 @@ class CardService {
         return false;
       }
     } on DioError catch (e) {
-      print('Ocorreu um erro: ${e.message}');
+      if (e.message != 'Http status error [404]') {
+        print('Ocorreu um erro: ${e.message}');
+      }
       return false;
     }
   }
@@ -71,6 +73,7 @@ class CardService {
       return false;
     }
   }
+
   //2.1.5 Criar método para deletar card
   Future<bool> deletarCard(int id) async {
     try {
@@ -81,9 +84,12 @@ class CardService {
         return false;
       }
     } on DioError catch (e) {
-      print('Ocorreu um erro: ${e.message}');
+      if (e.message != 'Http status error [404]') {
+        print('Ocorreu um erro: ${e.message}');
+      } else {
+        print('Card não encontrado.');
+      }
       return false;
     }
   }
-
 }
